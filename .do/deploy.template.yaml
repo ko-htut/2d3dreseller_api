@@ -1,0 +1,12 @@
+spec:
+  name: 2d3dreseller_api
+  services:
+    - environment_slug: php
+      git:
+        branch: main
+        repo_clone_url: https://github.com/ko-htut/2d3dreseller_api.git
+      envs:
+        - key: APP_KEY
+          value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
+      name: 2d3dreseller_api
+      run_command: heroku-php-apache2 public/
