@@ -1,7 +1,6 @@
 spec:
   name: 2d3dreseller_api
   services:
-    - name: web
     - environment_slug: php
       git:
         branch: main
