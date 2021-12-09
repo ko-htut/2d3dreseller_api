@@ -75,9 +75,32 @@ class BetNumbers
                     case '7BK':
                     case '8BK':
                     case '9BK':
+                    case 'POWER':
+                    case 'NATKHAT':
+                    case '10FULL':
+                    case '5FULL':
+                    case '0FULL':
+                    case 'PADAYTAR':
+                    case 'BROTHER':
+                    case 'POWER_BROTHER':
+                    case 'APUU':
                         $nums = config('essentials.numbers.' . $number['type']);
                         foreach ($nums as $n) {
                             $this->addNumber($n, $number['type'], $number['amount']);
+                        }
+                        break;
+                    case 'POWER_BROTHER_R':
+                        $nums = config('essentials.numbers.POWER_BROTHER');
+                        foreach ($nums as $n) {
+                            $this->addNumber($n, $number['type'], $number['amount']);
+                            $this->addNumber(strrev($n), $number['type'], $number['amount']);
+                        }
+                        break;
+                    case 'BROTHER_R':
+                        $nums = config('essentials.numbers.BROTHER');
+                        foreach ($nums as $n) {
+                            $this->addNumber($n, $number['type'], $number['amount']);
+                            $this->addNumber(strrev($n), $number['type'], $number['amount']);
                         }
                         break;
                 }
