@@ -13,6 +13,9 @@
         "laravel/tinker": "^2.5",
         "laravel/nova": "*"
     },
+    "provide": {
+        "ext-bcmath": "*"
+    },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
