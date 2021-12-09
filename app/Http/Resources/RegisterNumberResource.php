@@ -27,7 +27,7 @@ class RegisterNumberResource extends JsonResource
     {
         return [
             'type' => $type,
-            'total' => current_register_number_total_amount($number, $type, false) ,
+            'total' => current_register_number_total_amount($number, $type['type'], false) ,
         ];
     }
 }

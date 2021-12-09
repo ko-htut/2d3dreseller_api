@@ -28,10 +28,11 @@ Route::apiResource('registers', ApiController\RegisterController::class)->except
     'update', 'destroy', 'show'
 ]);
 Route::get('/registers/{register}/bets', [ApiController\RegisterController::class, 'betsList']);
+Route::post('registers/{register}/close', [ApiController\RegisterController::class, 'close']);
 
 Route::get('registers/current', [ApiController\RegisterController::class, 'current']);
 Route::get('registers/current/bet', [ApiController\RegisterController::class, 'list']);
 Route::get('registers/current/total', [ApiController\RegisterController::class, 'total']);
 
 Route::post('registers/current/bet', [ApiController\RegisterController::class, 'bet']);
-Route::post('registers/current/close', [ApiController\RegisterController::class, 'close']);
+Route::post('registers/current/close', [ApiController\RegisterController::class, 'currentRegisterClose']);

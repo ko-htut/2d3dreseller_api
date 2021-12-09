@@ -81,11 +81,36 @@ class RegisterController extends Controller
         return $register ? new RegisterResource($register) : response()->json(['data' => null], 200);
     }
 
+    public function close(Request $request, Register $register)
+    {
+        try {
+            $validator = Validator::make($request->all(),[
+                'number' => ['required']
+            ]);
+
+            if ($validator->fails())
+            {
+                return response()->json($validator->errors()->messages(), 422);
+            }
+            $number = Number::where('number', $request->input('number'))->first();
+            $register->update([
+                'closed_at' => now(),
+                'note' => $request->input('note'),
+            ]);
+            $register->number()->associate($number);
+            $register->save();
+            return response()->json(['message' => 'အရောင်းစာရင်း ပိတ်တာ အောင်မြင်ပါတယ်'], 201);
+
+        }catch (Exception $e) {
+            return response()->json(['message' => 'စာရင်းပိတ်တဲ့ အချိန်မှာ တခုခု မှားယွင်းနေပါတယ်'], 500);
+        }
+    }
+
     /**
      * @param Request $request
      * @return JsonResponse
      */
-    public function close(Request $request): JsonResponse
+    public function currentRegisterClose(Request $request): JsonResponse
     {
         try {
             $validator = Validator::make($request->all(),[
@@ -134,7 +159,7 @@ class RegisterController extends Controller
                 'types' => collect(config('essentials.types'))->map(function ($type) {
                     return [
                         'type' => $type,
-                        'total' => current_register_number_total_amount(false, $type, false),
+                        'total' => current_register_number_total_amount(false, $type['type'], false),
                     ];
                 })
             ];
