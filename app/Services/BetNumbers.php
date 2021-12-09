@@ -46,21 +46,6 @@ class BetNumbers
                                 $this->addNumber($f, $number['type'], $number['amount']);
                             }
                             break;
-                        case '0BK':
-                        case '1BK':
-                        case '2BK':
-                        case '3BK':
-                        case '4BK':
-                        case '5BK':
-                        case '6BK':
-                        case '7BK':
-                        case '8BK':
-                        case '9BK':
-                            $nums = config('essentials.numbers.' . $number['type']);
-                            foreach ($nums as $n) {
-                                $this->addNumber($n, $number['type'], $number['amount']);
-                            }
-                            break;
                     }
                 }
             }else{
