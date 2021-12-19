@@ -142,7 +142,7 @@ class RegisterController extends Controller
     public function list()
     {
         try {
-            return RegisterNumberResource::collection(Number::where('type', '2D')->paginate(10));
+            return RegisterNumberResource::collection(Number::where('type', '2D')->get());
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
