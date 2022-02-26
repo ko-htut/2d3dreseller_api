@@ -12,6 +12,7 @@
         "laravel/nova": "*",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "php-junior/nova-logs": "^1.1",
         "predis/predis": "^1.1"
     },
     "require-dev": {
