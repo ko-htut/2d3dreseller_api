@@ -36,6 +36,7 @@ class WebSocketController implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $conn, $msg)
     {
+        echo $msg;
         $data = json_decode($msg);
         if (isset($data->command)) {
             switch ($data->command) {
@@ -95,6 +96,15 @@ class WebSocketController implements MessageComponentInterface
 
                     break;
                 default:
+                    $example = array(
+                        'methods' => [
+                                    "subscribe" => '{command: "subscribe", channel: "global"}',
+                                    "groupchat" => '{command: "groupchat", message: "hello glob", channel: "global"}',
+                                    "message" => '{command: "message", to: "1", message: "it needs xss protection"}',
+                                    "register" => '{command: "register", userId: 9}',
+                                ],
+                    );
+                    $conn->send(json_encode($example));
                     break;
             }
         }
