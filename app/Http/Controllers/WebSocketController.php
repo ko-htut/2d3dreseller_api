@@ -66,10 +66,17 @@ class WebSocketController implements MessageComponentInterface
                     }
 
                     $lastNumber = TwoDChangeNumber::orderBy('id','desc')->first();
-                    if($lastNumber->number != $item['result']){
+                    if($lastNumber){
+                        if($lastNumber->number != $item['result']){
+                            $lastNumber->number = $item['result'];
+                            $lastNumber->save();
+                        }
+                    }else{
+                        $lastNumber = new TwoDChangeNumber;
                         $lastNumber->number = $item['result'];
                         $lastNumber->save();
                     }
+                    
 
                     $changeNumber = TwoDChangeNumber::whereDate('date', now()->toDateString())
                                         ->where('time_type', $time_type)
