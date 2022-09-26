@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('websocket:init')->timezone('Asia/Yangon')->cron('30 * * * 1-5');
+        $schedule->command('websocket:init')->timezone('Asia/Yangon')->cron('* * * * 1-5');
         $schedule->call('\App\Http\Controllers\TwoDWonNumberController@store')->timezone('Asia/Yangon')->cron('01 12 * * 1-5');
         $schedule->call('\App\Http\Controllers\TwoDWonNumberController@store')->timezone('Asia/Yangon')->cron('30 16 * * 1-5');
     }
