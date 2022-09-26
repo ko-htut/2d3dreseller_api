@@ -51,6 +51,8 @@ class WebSocketController implements MessageComponentInterface
                                     ->select('number', 'set', 'val', 'time_type', 'date')
                                     ->get();
                     
+                    $currentHour = Carbon::now()->format('H');
+                    $currentMin = Carbon::now()->format('i');
                     $time_type = null;
                     if($currentHour > "6" && $currentHour < "12" ||
                     $currentHour == "6" && $currentMin >= "00" ||
