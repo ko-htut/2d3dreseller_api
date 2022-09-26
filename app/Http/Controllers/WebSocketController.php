@@ -75,6 +75,7 @@ class WebSocketController implements MessageComponentInterface
                         $lastNumber = new TwoDChangeNumber;
                         $lastNumber->time_type = $time_type;
                         $lastNumber->number = $item['result'];
+                        $lastNumber->date = now()->toDateString();
                         $lastNumber->save();
                     }
                     
