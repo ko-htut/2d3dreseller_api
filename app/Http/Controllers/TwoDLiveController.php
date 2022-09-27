@@ -28,6 +28,8 @@ class TwoDLiveController extends Controller
         $currentHour = Carbon::now()->format('H');
         $currentMin = Carbon::now()->format('i');
         $time_type = null;
+        $toDay = now()->toDateString();
+
         if($currentHour > "6" && $currentHour < "12" ||
             $currentHour == "6" && $currentMin >= "00" ||
             $currentHour == "12" && $currentMin < "02"
@@ -37,42 +39,50 @@ class TwoDLiveController extends Controller
             $time_type = "PM";
         }
 
-        $lastNumber = TwoDChangeNumber::orderBy('id','desc')->first();
-            if($lastNumber){
-                if($lastNumber->number != $item['result']){
-                    $lastNumber->number = $item['result'];
-                    $lastNumber->save();
-                }
-            }else{
-                $lastNumber = new TwoDChangeNumber;
-                $lastNumber->time_type = $time_type;
-                $lastNumber->number = $item['result'];
-                $lastNumber->date = now()->toDateString();
-                $lastNumber->save();
+        $lastNumber = TwoDChangeNumber::orderBy('id','desc')
+                            ->where('date', $toDay)
+                            ->where('time_type', $time_type)
+                            ->first();
+        if($lastNumber){
+            if($lastNumber->number != $item['result']){
+                $data = new TwoDChangeNumber;
+                $data->number = $item['result'];
+                $data->time_type = $time_type;
+                $data->date = $toDay;
+                $data->save();
             }
+        }else{
+            $data = new TwoDChangeNumber;
+            $data->time_type = $time_type;
+            $data->number = $item['result'];
+            $data->date = $toDay;
+            $data->save();
+        }
                     
-            $changeNumber = TwoDChangeNumber::whereDate('date', now()->toDateString())
-                                        ->where('time_type', $time_type)
-                                        ->select('number')->get();
+        $changeNumber = TwoDChangeNumber::whereDate('date', $toDay)
+                                ->where('time_type', $time_type)
+                                ->select('number')
+                                ->get();
 
-            $dw = date("w");
-                    $status = true;
-                    if($dw == 0 || $dw == 6){
-                        $status = false;
-                    }else{
-                        $status = true;
-                    }
-                    $result = [
-                        'status' => $status,
-                        'dw' => now()->format('l'),
-                        'date' => $item['date'],
-                        'set' => $item['set'],
-                        'val' => $item['val'],
-                        'result' => $item['result'],
-                        'updated_at' => now(),
-                        'won_number' => $wonNumber,
-                        'change_number' => $changeNumber
-                    ];
+        $dw = date("w");
+        $status = true;
+        if($dw == 0 || $dw == 6){
+            $status = false;
+        }else{
+            $status = true;
+        }
+        
+        $result = [
+            'status' => $status,
+            'dw' => now()->format('l'),
+            'date' => $item['date'],
+            'set' => $item['set'],
+            'val' => $item['val'],
+            'result' => $item['result'],
+            'updated_at' => now(),
+            'won_number' => $wonNumber,
+            'change_number' => $changeNumber
+        ];
         return $result;
     }
 }
