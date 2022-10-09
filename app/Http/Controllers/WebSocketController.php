@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Goutte;
 use Log;
+use React\EventLoop\Loop;
+use React\EventLoop\LoopInterface;
 
 use App\Models\TwoDWonNumber;
 use App\Models\TwoDChangeNumber;
@@ -41,6 +43,9 @@ class WebSocketController implements MessageComponentInterface
         $data = json_decode($msg);
         if (isset($data->command)) {
             switch ($data->command) {
+                case "subscribe":
+                    $this->subscriptions[$conn->resourceId] = $data->channel;
+                break;
                 case 'twod-live':
 
                     // $crawler = Goutte::request('GET', 'https://classic.set.or.th/mkt/sectorialindices.do?language=en&country=US');
@@ -102,6 +107,7 @@ class WebSocketController implements MessageComponentInterface
                     //     'won_number' => $wonNumber,
                     //     'change_number' => $changeNumber
                     // ];
+
                     $result = app('App\Http\Controllers\TwoDLiveController')->update();
                     $conn->send(json_encode($result));
 
@@ -117,6 +123,14 @@ class WebSocketController implements MessageComponentInterface
                     );
                     $conn->send(json_encode($example));
                     break;
+            }
+
+            if(isset($target) && $target == "twod-live"){
+                $loop = Loop::get();
+                $loop->addPeriodicTimer(1, function($timer) use($conn, $loop, $status){
+                    $result = app('App\Http\Controllers\TwoDLiveController')->update();
+                    $conn->send(json_encode($result));
+                });
             }
         }
     }
