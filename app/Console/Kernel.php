@@ -9,22 +9,22 @@ class Kernel extends ConsoleKernel
 {
     
     protected $commands = [
-        Commands\WebSocketCommand::class
+        Commands\WebSocketCommand::class,
+        commands\TwoDLiveUpdate::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('websocket:init')->timezone('Asia/Yangon')->cron('* * * * 1-5');
+        //$schedule->command('websocket:init')->timezone('Asia/Yangon')->cron('* * * * 1-5');
         $schedule->call('\App\Http\Controllers\TwoDWonNumberController@store')->timezone('Asia/Yangon')->cron('01 12 * * 1-5');
         $schedule->call('\App\Http\Controllers\TwoDWonNumberController@store')->timezone('Asia/Yangon')->cron('30 16 * * 1-5');
-        $schedule->call('\App\Http\Controllers\TwoDLiveController@update')->timezone('Asia/Yangon')->cron('* * * * 1-5');
     }
 
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
+    protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
+    {
+        $shortSchedule->command('twod:live')->everySecond();
+    }
+
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
