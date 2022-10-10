@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
 
     protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
     {
-        $shortSchedule->command('twod:live')->everySecond();
+        $shortSchedule->command('twod:live')->everySecond(20);
     }
 
     protected function commands()
