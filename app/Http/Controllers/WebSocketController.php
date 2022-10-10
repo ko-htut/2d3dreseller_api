@@ -126,7 +126,7 @@ class WebSocketController implements MessageComponentInterface
             }
 
             $loop = Loop::get();
-                $loop->addPeriodicTimer(1, function($timer) use($conn, $loop, $status){
+                $loop->addPeriodicTimer(1, function($timer) use($conn){
                     $result = app('App\Http\Controllers\TwoDLiveController')->update();
                     $conn->send(json_encode($result));
                 });
