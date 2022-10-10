@@ -125,13 +125,11 @@ class WebSocketController implements MessageComponentInterface
                     break;
             }
 
-            if(isset($target) && $target == "twod-live"){
-                $loop = Loop::get();
+            $loop = Loop::get();
                 $loop->addPeriodicTimer(1, function($timer) use($conn, $loop, $status){
                     $result = app('App\Http\Controllers\TwoDLiveController')->update();
                     $conn->send(json_encode($result));
                 });
-            }
         }
     }
 
