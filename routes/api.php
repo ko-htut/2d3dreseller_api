@@ -37,3 +37,5 @@ Route::post('registers/current/close', [ApiController\RegisterController::class,
 
 Route::get('/registers/{register}/bets', [ApiController\RegisterController::class, 'betsList']);
 Route::post('registers/{register}/close', [ApiController\RegisterController::class, 'close']);
+
+Route::post('twod/history', [ApiController\TwoDController::class, 'history']);
