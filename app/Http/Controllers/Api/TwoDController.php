@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\TwoDWonNumber;
+
 class TwoDController extends Controller
 {
     public function history()
