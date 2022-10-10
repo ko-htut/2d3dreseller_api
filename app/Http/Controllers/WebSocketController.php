@@ -132,6 +132,7 @@ class WebSocketController implements MessageComponentInterface
 
                 if($counter === 10){
                     sleep(3);
+                    $counter = 0;
                 }
                 $result = app('App\Http\Controllers\TwoDLiveController')->update();
                 $conn->send(json_encode($result));
