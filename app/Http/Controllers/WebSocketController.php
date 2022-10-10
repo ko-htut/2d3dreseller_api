@@ -126,10 +126,16 @@ class WebSocketController implements MessageComponentInterface
             }
 
             $loop = Loop::get();
-                $loop->addPeriodicTimer(1, function($timer) use($conn){
-                    $result = app('App\Http\Controllers\TwoDLiveController')->update();
-                    $conn->send(json_encode($result));
-                });
+            $counter = 0;
+            $loop->addPeriodicTimer(1, function() use($conn, &$counter){
+                $counter++;
+
+                if($counter === 10){
+                    sleep(3);
+                }
+                $result = app('App\Http\Controllers\TwoDLiveController')->update();
+                $conn->send(json_encode($result));
+            });
         }
     }
 
