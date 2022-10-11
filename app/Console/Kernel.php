@@ -16,12 +16,13 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call('\App\Http\Controllers\TwoDWonNumberController@store')->timezone('Asia/Yangon')->cron('01 12 * * 1-5');
         $schedule->call('\App\Http\Controllers\TwoDWonNumberController@store')->timezone('Asia/Yangon')->cron('30 16 * * 1-5');
+        $schedule->call('\App\Http\Controllers\TwoDLiveController@update')->timezone('Asia/Yangon')->cron('* * * * 1-5');
     }
 
-    protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
-    {
-        $shortSchedule->command('twod:live')->everySecond(20);
-    }
+    // protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
+    // {
+    //     $shortSchedule->command('twod:live')->everySecond(20);
+    // }
 
     protected function commands()
     {
