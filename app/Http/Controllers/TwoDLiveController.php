@@ -26,7 +26,7 @@ class TwoDLiveController extends Controller
             $response = file_get_contents('https://api.settrade.com/api/market/SET/info');
             $response = json_decode($response);
 
-            $item['date'] => now();
+            $item['date'] = now();
             $item['set'] = (string)$response->index[0]->last;
             $val = $response->index[0]->total_value;
             $val = $val / 1000000;
