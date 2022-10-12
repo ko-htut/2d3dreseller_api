@@ -64,6 +64,7 @@ class TwoDLiveController extends Controller
             $changeNumber = TwoDChangeNumber::whereDate('date', $toDay)
                                     ->where('time_type', $time_type)
                                     ->select('number')
+                                    ->orderBy('id','desc')
                                     ->get();
     
             $dw = date("w");
