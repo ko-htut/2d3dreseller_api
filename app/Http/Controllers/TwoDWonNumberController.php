@@ -42,7 +42,7 @@ class TwoDWonNumberController extends Controller
             $val = $response->index[0]->total_value;
             $val = $val / 1000000;
             $item['val'] = number_format((float)$val, 2, '.', '');
-            $item['result'] = Str:substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
+            $item['result'] = Str::substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
 
             $currentHour = Carbon::now()->format('H');
             $currentMin = Carbon::now()->format('i');

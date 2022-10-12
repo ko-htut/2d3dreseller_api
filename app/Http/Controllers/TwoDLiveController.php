@@ -30,9 +30,9 @@ class TwoDLiveController extends Controller
             $val = $response->index[0]->total_value;
             $val = $val / 1000000;
             $item['val'] = number_format((float)$val, 2, '.', '');
-            $item['result'] = Str:substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
+            $item['result'] = Str::substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
 
-            
+
             $wonNumber = TwoDWonNumber::whereDate('date', now()->toDateString())
                                         ->select('number', 'set', 'val', 'time_type', 'date')
                                         ->get();
