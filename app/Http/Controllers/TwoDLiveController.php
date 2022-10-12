@@ -17,21 +17,21 @@ class TwoDLiveController extends Controller
     public function update(){
 
         try{
-            // $crawler = Goutte::request('GET', 'https://classic.set.or.th/mkt/sectorialindices.do?language=en&country=US');
-            // $item['date'] = Str::replace('* Market data provided for educational purpose or personal use only, not intended for trading purpose. * Last Update ','',$crawler->filter('#maincontent .row .table-info caption')->text());
-            // $item['set'] = $crawler->filter('#maincontent .row .table-info tbody tr td')->eq(1)->text();
-            // $item['val'] = $crawler->filter('#maincontent .row .table-info tbody tr td')->eq(7)->text();
-            // $item['result'] = Str::substr($item['set'], -1) . Str::substr(Str::before($item['val'], '.'), -1);
+            $crawler = Goutte::request('GET', 'https://classic.set.or.th/mkt/sectorialindices.do?language=en&country=US');
+            $item['date'] = Str::replace('* Market data provided for educational purpose or personal use only, not intended for trading purpose. * Last Update ','',$crawler->filter('#maincontent .row .table-info caption')->text());
+            $item['set'] = $crawler->filter('#maincontent .row .table-info tbody tr td')->eq(1)->text();
+            $item['val'] = $crawler->filter('#maincontent .row .table-info tbody tr td')->eq(7)->text();
+            $item['result'] = Str::substr($item['set'], -1) . Str::substr(Str::before($item['val'], '.'), -1);
     
-            $response = file_get_contents('https://api.settrade.com/api/market/SET/info');
-            $response = json_decode($response);
+            // $response = file_get_contents('https://api.settrade.com/api/market/SET/info');
+            // $response = json_decode($response);
 
-            $item['date'] = now();
-            $item['set'] = (string)$response->index[0]->last;
-            $val = $response->index[0]->total_value;
-            $val = $val / 1000000;
-            $item['val'] = number_format((float)$val, 2, '.', '');
-            $item['result'] = Str::substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
+            // $item['date'] = now();
+            // $item['set'] = (string)$response->index[0]->last;
+            // $val = $response->index[0]->total_value;
+            // $val = $val / 1000000;
+            // $item['val'] = number_format((float)$val, 2, '.', '');
+            // $item['result'] = Str::substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
 
             Log::info(json_encode($item));
             $wonNumber = TwoDWonNumber::whereDate('date', now()->toDateString())
