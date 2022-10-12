@@ -93,7 +93,7 @@ class TwoDLiveController extends Controller
                 'set' => $item['set'],
                 'val' => $item['val'],
                 'result' => $item['result'],
-                'updated_at' => now(),
+                'updated_at' => Carbon::now(),
                 'won_number' => $wonNumber,
                 'change_number' => $changeNumber
             ];
