@@ -72,6 +72,9 @@ class WebSocketController implements MessageComponentInterface
                 $currentHour = Carbon::now()->format('H');
                 $currentMin = Carbon::now()->format('i');
                 if($currentHour < '12' && $currentMin < '10'){
+                    $message = '{message:"2D Stock is pending to open"}';
+                    $conn->send(json_encode($message));
+                }else{
                     $loop = Loop::get();
                     $counter = 0;
                     $loop->addPeriodicTimer(1, function() use($conn, &$counter){
@@ -84,9 +87,7 @@ class WebSocketController implements MessageComponentInterface
                         $result = app('App\Http\Controllers\TwoDLiveController')->update();
                         $conn->send(json_encode($result));
                     });
-                }else{
-                    $message = '{message:"2D Stock is pending to open"}';
-                    $conn->send(json_encode($message));
+                    
                 }
                 
             }else{
