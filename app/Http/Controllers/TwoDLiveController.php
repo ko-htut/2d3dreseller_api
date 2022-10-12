@@ -26,13 +26,14 @@ class TwoDLiveController extends Controller
             $response = file_get_contents('https://api.settrade.com/api/market/SET/info');
             $response = json_decode($response);
 
+            $item['date'] => now();
             $item['set'] = (string)$response->index[0]->last;
             $val = $response->index[0]->total_value;
             $val = $val / 1000000;
             $item['val'] = number_format((float)$val, 2, '.', '');
             $item['result'] = Str::substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
 
-
+            Log::info(json_encode($item));
             $wonNumber = TwoDWonNumber::whereDate('date', now()->toDateString())
                                         ->select('number', 'set', 'val', 'time_type', 'date')
                                         ->get();
