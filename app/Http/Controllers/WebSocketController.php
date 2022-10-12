@@ -22,6 +22,7 @@ class WebSocketController implements MessageComponentInterface
     private $subscriptions;
     private $users;
     private $userresources;
+    private $connetedUser;
 
     public function __construct()
     {
