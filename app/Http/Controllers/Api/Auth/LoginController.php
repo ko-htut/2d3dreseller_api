@@ -7,6 +7,8 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Validator;
+use App\Models\User;
 use function auth;
 use function response;
 
