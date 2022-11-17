@@ -40,3 +40,4 @@ Route::get('/registers/{register}/bets', [ApiController\RegisterController::clas
 Route::post('registers/{register}/close', [ApiController\RegisterController::class, 'close']);
 
 Route::post('twod/history', [ApiController\TwoDController::class, 'history']);
+Route::post('twod/live/check', [ApiController\TwoDController::class, 'check2DLive']);
