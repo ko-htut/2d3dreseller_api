@@ -46,46 +46,13 @@ class WebSocketController implements MessageComponentInterface
             switch ($data->command) {
                 case "subscribe":
                     $this->subscriptions[$conn->resourceId] = $data->channel;
-                break;
-                default:
-                    // $example = array(
-                    //     'methods' => [
-                    //                 "subscribe" => '{command: "subscribe", channel: "global"}',
-                    //                 "groupchat" => '{command: "groupchat", message: "hello glob", channel: "global"}',
-                    //                 "message" => '{command: "message", to: "1", message: "it needs xss protection"}',
-                    //                 "register" => '{command: "register", userId: 9}',
-                    //             ],
-                    // );
-                    // $conn->send(json_encode($example));
+                    break;
+                case "twod":
+                    $this->live2D();
                     break;
             }
 
-            $dw = date("w");
-            $status = true;
-            if($dw == 0 || $dw == 6){
-                $status = false;
-            }else{
-                $status = true;
-            }
-
-            if($status){
-                $loop = Loop::get();
-                    $counter = 0;
-                    $loop->addPeriodicTimer(1, function() use($conn, &$counter){
-                        $counter++;
-        
-                        if($counter === 10){
-                            sleep(3);
-                            $counter = 0;
-                        }
-                        $result = app('App\Http\Controllers\TwoDLiveController')->update();
-                        $conn->send(json_encode($result));
-                    });
-                
-            }else{
-                $message = '{message:"2D Stock is close today"}';
-                $conn->send(json_encode($message));
-            }
+            
             
         }
     }
@@ -110,6 +77,30 @@ class WebSocketController implements MessageComponentInterface
     {
         echo "An error has occurred: {$e->getMessage()}\n";
         $conn->close();
+    }
+
+    public function live2D(ConnectionInterface $conn)
+    {
+        $dw = date("w");
+        $status = true;
+        if($dw == 0 || $dw == 6){
+            $status = false;
+        }else{
+            $status = true;
+        }
+
+        if($status){
+            $loop = Loop::get();
+                $counter = 0;
+                $loop->addPeriodicTimer(1, function() use($conn, &$counter){
+                $result = app('App\Http\Controllers\TwoDLiveController')->update();
+                $conn->send(json_encode($result));
+            });
+            
+        }else{
+            $message = '{message:"2D Stock is close today"}';
+            $conn->send(json_encode($message));
+        }
     }
 
 }
