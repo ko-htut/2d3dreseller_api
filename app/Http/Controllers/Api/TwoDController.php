@@ -74,16 +74,53 @@ class TwoDController extends Controller
     public function history()
     {
         $data = TwoDWonNumber::orderBy('id','desc')->get();
-        if(count($data) > 0){
+
+        $dateCollection = [];
+        $savedArray = [];
+
+        foreach($data as $row){
+            if(array_key_exists($row->date, $dateCollection)){
+                $tmp = $dateCollection[$row->date];
+                array_push($tmp, $row);
+                $dateCollection[$row->date] = $tmp;
+            }else{
+                $tmp = [];
+                array_push($tmp, $row);
+                $dateCollection[$row->date] = $tmp;
+            }
+        }
+
+        foreach($dateCollection as $row){
+            $item['date'] = $row[0]->date;
+            $item['item'] = collect($row)->sortBy('time_type')->flatten(1); //TwoDResultResource::collection($row)
+            array_push($savedArray, $item);
+        }
+
+        //return response()->json( new TwoDResultCollection($data), 200);
+
+        if(count($savedArray) > 0){
             return response()->json([
                 'status'    => true,
-                'data'      => $data   
+                'message'   => 'Success',
+                'data'      => $savedArray
             ]);
         }else{
             return response()->json([
                 'status'    => false,
-                'message'   => 'There is no data'
+                'message'   => 'There is no events'
             ]);
         }
+
+        // if(count($data) > 0){
+        //     return response()->json([
+        //         'status'    => true,
+        //         'data'      => $data   
+        //     ]);
+        // }else{
+        //     return response()->json([
+        //         'status'    => false,
+        //         'message'   => 'There is no data'
+        //     ]);
+        // }
     }
 }
