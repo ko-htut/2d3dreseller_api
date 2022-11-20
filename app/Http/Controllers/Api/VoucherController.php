@@ -48,7 +48,8 @@ class VoucherController extends Controller
         if($data->save()){
             return response()->json([
                 'status'    => true,
-                'message'   => 'အရောင်းစာရင်း ဖွင့်ခြင်းအောင်မြင်ပါသည်'
+                'message'   => 'အရောင်းစာရင်း ဖွင့်ခြင်းအောင်မြင်ပါသည်',
+                'data'      => $data
             ]);
         }
 
@@ -107,8 +108,10 @@ class VoucherController extends Controller
     {
 
         $decoded = json_decode($request->getContent(), true);
-
-        $voucher = Voucher::where('id', $decoded['voucher_id'])->whre('is_close', 0)->first();
+        $user = Auth::user();
+        $voucher = Voucher::where('id', $decoded['voucher_id'])
+                            ->where('is_close', 0)
+                            ->where('user_id', $user->id)->first();
         if(!$voucher){
             return response()->json([
                 'status'    => false,
