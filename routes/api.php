@@ -41,3 +41,5 @@ Route::post('registers/{register}/close', [ApiController\RegisterController::cla
 
 Route::post('twod/history', [ApiController\TwoDController::class, 'history']);
 Route::post('twod/live/check', [ApiController\TwoDController::class, 'check2DLive']);
+
+Route::post('voucher', [ApiController\VoucherController::class, 'index']);
