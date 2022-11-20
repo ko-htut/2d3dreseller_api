@@ -16,7 +16,7 @@ class VoucherResource extends JsonResource
             'note' => $this->note,
             'opened_at' => $this->opened_at,
             'closed_at' => $this->closed_at,
-            'numbers' => VoucherItem::where('voucher_id', $this->id)->get(),
+            'numbers' => VoucherItem::where('voucher_id', $this->id)->select('number', 'amount')->get(),
             'total' => get_total_sale_amount($this->id, false, false, false),
         ];
     }

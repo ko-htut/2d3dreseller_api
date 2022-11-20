@@ -24,7 +24,8 @@ class VoucherController extends Controller
 
     public function index(Request $request)
     {
-        $data = Voucher::orderBy('id', 'desc')->paginate(30);
+        $user = Auth::user();
+        $data = Voucher::orderBy('id', 'desc')->where('user_id', $user->id)->paginate(30);
         return response()->json(new VoucherCollection($data), 200); 
     }
 
