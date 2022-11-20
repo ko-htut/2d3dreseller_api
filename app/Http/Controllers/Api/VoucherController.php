@@ -18,7 +18,7 @@ class VoucherController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         return RegisterResource::collection($request->user()
             ->registers()
