@@ -111,16 +111,5 @@ class TwoDController extends Controller
             ]);
         }
 
-        // if(count($data) > 0){
-        //     return response()->json([
-        //         'status'    => true,
-        //         'data'      => $data   
-        //     ]);
-        // }else{
-        //     return response()->json([
-        //         'status'    => false,
-        //         'message'   => 'There is no data'
-        //     ]);
-        // }
     }
 }

@@ -17,4 +17,9 @@ class Register extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    public function numbers()
+    {
+        return $this->hasMany(Number::class);
+    }
 }
