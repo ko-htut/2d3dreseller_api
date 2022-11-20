@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Builders\BetBuilder;
 use App\Http\Resources\RegisterResource;
 
 class VoucherController extends Controller
