@@ -41,6 +41,7 @@ class VoucherController extends Controller
 
         $data = new Voucher;
         $data->voucher_code = ""; //
+        $data->user_id = $user->id;
         $data->note = $request->note;
         $data->date = now()->toDateString();
         $data->opened_at = now();
