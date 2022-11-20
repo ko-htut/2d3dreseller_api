@@ -43,3 +43,7 @@ Route::post('twod/history', [ApiController\TwoDController::class, 'history']);
 Route::post('twod/live/check', [ApiController\TwoDController::class, 'check2DLive']);
 
 Route::post('voucher', [ApiController\VoucherController::class, 'index']);
+Route::post('voucher/open', [ApiController\VoucherController::class, 'store']);
+Route::post('voucher/close', [ApiController\VoucherController::class, 'update']);
+Route::post('voucher/current', [ApiController\VoucherController::class , 'current']);
+Route::post('voucher/bet', [ApiController\VoucherController::class, 'bet']);
