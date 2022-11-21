@@ -24,7 +24,8 @@ class CreateRegistersTable extends Migration
 
             $table->unsignedBigInteger('number_id')->nullable();
             $table->foreign('number_id')->references('id')->on('numbers')->onDelete('set null');
-
+            
+            $table->string('date')->nullable();
             $table->timestamp('opened_at')->nullable();
             $table->timestamp('closed_at')->nullable();
             $table->timestamps();
