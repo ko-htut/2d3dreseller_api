@@ -52,6 +52,13 @@ class RegisterController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
+            $check = Register::where('user_id', $request->user()->id)->whereNull('closed_at')->get();
+            if(count($check) > 0){
+                return response()->json([
+                    'status'    => false,
+                    'message'   => 'အရောင်းစာရင်း ဖွင့်ပြီးသားရှိပါတယ်'
+                ]);
+            }
             $request->user()->registers()->create([
                 'date'      => now()->toDateString(),
                 'opened_at' => now(),
