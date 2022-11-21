@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Goutte;
+use Log;
 
 use App\Models\TwoDWonNumber;
 
@@ -52,6 +53,7 @@ class TwoDController extends Controller
         });
         if(isset($result[0])){
             $holiday = $result[0];
+            Log::info(json_encode($holiday));
             $holiday = json_decode($holiday, true);
             if(isset($holiday)){
                 foreach($holiday->data as $row){
