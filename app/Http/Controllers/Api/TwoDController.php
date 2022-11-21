@@ -50,19 +50,22 @@ class TwoDController extends Controller
             $item['data'] = $days;
             return $item;
         });
-        $holiday = $result[0];
-        $holiday = json_decode($holiday, true);
-        if(isset($holiday)){
-            foreach($holiday->data as $row){
-                $item['date'] = explode(" ", $row->date);
-                if($item['date'][0] == Carbon::now()->format('d') && $item['date'][1] == Carbon::now()->format('F')){
-                    return response()->json([
-                        'status'    => false,
-                        'message'   => $row->note
-                    ]);
+        if(isset($result[0])){
+            $holiday = $result[0];
+            $holiday = json_decode($holiday, true);
+            if(isset($holiday)){
+                foreach($holiday->data as $row){
+                    $item['date'] = explode(" ", $row->date);
+                    if($item['date'][0] == Carbon::now()->format('d') && $item['date'][1] == Carbon::now()->format('F')){
+                        return response()->json([
+                            'status'    => false,
+                            'message'   => $row->note
+                        ]);
+                    }
                 }
             }
         }
+        
         
 
         return response()->json([
@@ -111,5 +114,49 @@ class TwoDController extends Controller
             ]);
         }
 
+    }
+
+    public function saveTwoDWonNumber()
+    {
+        $currentHour = Carbon::now()->format('H');
+        $currentMin = Carbon::now()->format('i');
+        $time_type = null;
+        if($currentHour > "6" && $currentHour < "12" ||
+            $currentHour == "6" && $currentMin >= "00" ||
+            $currentHour == "12" && $currentMin < "02"
+        ){
+            $time_type = "AM";
+        }else{
+            $time_type = "PM";
+        }
+
+        try{
+            $crawler = Goutte::request('GET', 'https://classic.set.or.th/mkt/sectorialindices.do?language=en&country=US');
+            $item['date'] = Str::replace('* Market data provided for educational purpose or personal use only, not intended for trading purpose. * Last Update ','',$crawler->filter('#maincontent .row .table-info caption')->text());
+            $item['set'] = $crawler->filter('#maincontent .row .table-info tbody tr td')->eq(1)->text();
+            $item['val'] = $crawler->filter('#maincontent .row .table-info tbody tr td')->eq(7)->text();
+            $item['result'] = Str::substr($item['set'], -1) . Str::substr(Str::before($item['val'], '.'), -1);
+
+            $thai = [
+                'set'           => $item['set'],
+                'val'           => $item['val'],
+                'number'        => $item['result'],
+                'time_type'     => $time_type,
+                'date'          => now()->toDateString(),
+                'country'       => 'Thai',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ];
+
+            $check = TwoDWonNumber::where('time_type', $time_type)
+                                    ->where('date', now()->toDateString())
+                                    ->first();
+            if(!$check){
+                TwoDWonNumber::insert($thai);
+            }
+            echo "Finish";
+        }catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
     }
 }
