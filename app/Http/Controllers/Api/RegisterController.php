@@ -37,15 +37,15 @@ class RegisterController extends Controller
      */
     public function index(Request $request)
     {
-        $query = RegisterResource::collection($request->user()
+        $query = $request->user()
                     ->registers()
                     ->orderBy('created_at','desc')
-                    ->paginate($request->input('per_page', 10)));
+                    
         if($request->input('date')){
             $query->where('date', $request->input('date'));
         }
-
-        return $query;
+        $data = $query->paginate($request->input('per_page', 10));
+        return RegisterResource::collection($data);
         // return RegisterResource::collection($request->user()
         //     ->registers()
         //     ->where('date', $request->input('date'))
