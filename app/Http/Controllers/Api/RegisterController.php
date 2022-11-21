@@ -40,6 +40,7 @@ class RegisterController extends Controller
         return RegisterResource::collection($request->user()
             ->registers()
             ->where('date', $request->input('date'))
+            ->orderBy('created_at','desc')
             ->paginate($request->input('per_page', 10)));
     }
 
