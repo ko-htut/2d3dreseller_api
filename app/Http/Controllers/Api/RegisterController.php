@@ -39,7 +39,7 @@ class RegisterController extends Controller
     {
         $query = $request->user()
                     ->registers()
-                    ->orderBy('created_at','desc')
+                    ->orderBy('created_at','desc');
                     
         if($request->input('date')){
             $query->where('date', $request->input('date'));
