@@ -56,7 +56,7 @@ class TwoDController extends Controller
             Log::info(json_encode($holiday));
             //$holiday = json_decode($holiday);
             if(isset($holiday)){
-                foreach($holiday->data as $row){
+                foreach($holiday['data'] as $row){
                     $item['date'] = explode(" ", $row->date);
                     if($item['date'][0] == Carbon::now()->format('d') && $item['date'][1] == Carbon::now()->format('F')){
                         return response()->json([
