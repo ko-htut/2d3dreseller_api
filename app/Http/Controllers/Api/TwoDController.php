@@ -54,7 +54,7 @@ class TwoDController extends Controller
         if(isset($result[0])){
             $holiday = $result[0];
             Log::info(json_encode($holiday));
-            $holiday = json_decode($holiday, true);
+            $holiday = json_decode($holiday);
             if(isset($holiday)){
                 foreach($holiday->data as $row){
                     $item['date'] = explode(" ", $row->date);
