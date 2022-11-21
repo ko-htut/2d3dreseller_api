@@ -53,6 +53,7 @@ class RegisterController extends Controller
     {
         try {
             $request->user()->registers()->create([
+                'date'      => now()->toDateString(),
                 'opened_at' => now(),
             ]);
             return response()->json(['message' => 'အရောင်းစာရင်း ဖွင့်တာ အောင်မြင်ပါတယ်'], 201);
