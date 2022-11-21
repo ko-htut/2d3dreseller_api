@@ -39,7 +39,7 @@ class RegisterController extends Controller
     {
         return RegisterResource::collection($request->user()
             ->registers()
-            ->whereDate('date', $request->input('date', now()->format('Y-m-d')))
+            ->where('date', $request->input('date', now()->format('Y-m-d')))
             ->paginate($request->input('per_page', 10)));
     }
 
