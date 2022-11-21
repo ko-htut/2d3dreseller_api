@@ -55,17 +55,6 @@ class TwoDWonNumberController extends Controller
             }else{
                 $time_type = "PM";
             }
-    
-            // $toInsert = [
-            //     'number'    => $item['result'],
-            //     'set'       => $item['set'],
-            //     'val'       => $item['val'],
-            //     'time_type' => $time_type,
-            //     'created_by'=> 1,
-            //     'date'      => now()->toDateString(),
-            //     'created_at'=> now(),
-            //     'updated_at'=> now()
-            // ];
 
             $toInsert = [
                 'number'    => $item['result'],
@@ -78,7 +67,13 @@ class TwoDWonNumberController extends Controller
                 'updated_at'=> now()
             ];
     
-            TwoDWonNumber::insert($toInsert);
+            $check = TwoDWonNumber::where('time_type', $time_type)
+                                    ->where('date', now()->toDateString())
+                                    ->first();
+            if(!$check){
+                TwoDWonNumber::insert($toInsert);
+            }
+            
         }catch(\Exception $e){
             Log::info("Won Number Error ==> ".$e);
         }
