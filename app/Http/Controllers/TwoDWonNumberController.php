@@ -61,7 +61,6 @@ class TwoDWonNumberController extends Controller
                 'set'       => $item['set'],
                 'val'       => $item['val'],
                 'time_type' => $time_type,
-                'created_by'=> 1,
                 'date'      => now()->toDateString(),
                 'created_at'=> now(),
                 'updated_at'=> now()

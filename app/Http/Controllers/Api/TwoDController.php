@@ -145,7 +145,6 @@ class TwoDController extends Controller
                 'number'        => $item['result'],
                 'time_type'     => $time_type,
                 'date'          => now()->toDateString(),
-                'country'       => 'Thai',
                 'created_at'    => now(),
                 'updated_at'    => now()
             ];
