@@ -48,7 +48,7 @@ class WebSocketController implements MessageComponentInterface
                     $this->subscriptions[$conn->resourceId] = $data->channel;
                     break;
                 case "twod":
-                    $this->live2D();
+                    $this->live2D($conn);
                     break;
             }
 
