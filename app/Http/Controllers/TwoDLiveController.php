@@ -33,7 +33,6 @@ class TwoDLiveController extends Controller
             // $item['val'] = number_format((float)$val, 2, '.', '');
             // $item['result'] = Str::substr($item['set'], -1). Str::substr(Str::before($item['val'], '.'), -1);
 
-            Log::info(json_encode($item));
             $wonNumber = TwoDWonNumber::whereDate('date', now()->toDateString())
                                         ->select('number', 'set', 'val', 'time_type', 'date')
                                         ->get();
