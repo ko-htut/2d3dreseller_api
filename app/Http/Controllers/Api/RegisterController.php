@@ -206,7 +206,7 @@ class RegisterController extends Controller
     private function getCurrentRegister()
     {
         return auth()->user()->registers()
-            ->whereDate('opened_at', now()->format('Y-m-d'))
+            //->whereDate('opened_at', now()->format('Y-m-d'))
             ->whereNull('closed_at')
             ->first();
     }
