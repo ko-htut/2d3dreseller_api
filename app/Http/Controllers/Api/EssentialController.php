@@ -37,15 +37,15 @@ class EssentialController extends Controller
             'types' => config('essentials.types'),
             'dashboard' => [
                 'sales' => [
-                    'today' => Bet::query()->whereHas('register', function (Builder $query) {
+                    'today' => (string)Bet::query()->whereHas('register', function (Builder $query) {
                         $query->where('user_id', auth()->user()->id);
                     })->whereDate('created_at', now())->sum('total'),
-                    'week' => Bet::query()->whereHas('register', function (Builder $query) {
+                    'week' => (string)Bet::query()->whereHas('register', function (Builder $query) {
                         $query->where('user_id', auth()->user()->id);
                     })->whereBetween('created_at', [
                         now()->subWeek()->format('Y-m-d'), now()->format('Y-m-d')
                     ])->sum('total'),
-                    'month' => Bet::query()->whereHas('register', function (Builder $query) {
+                    'month' => (string)Bet::query()->whereHas('register', function (Builder $query) {
                         $query->where('user_id', auth()->user()->id);
                     })->whereMonth('created_at', now()->format('m'))->sum('total'),
                 ]
