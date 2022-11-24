@@ -48,6 +48,12 @@ class RegisterController extends Controller
         return RegisterResource::collection($data);
     }
 
+
+    public function getRegister($id){
+        $register = Register::find($id);
+        return new RegisterResource($register);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

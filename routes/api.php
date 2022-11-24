@@ -29,6 +29,7 @@ Route::apiResource('registers', ApiController\RegisterController::class)->except
     'update', 'destroy', 'show'
 ]);
 
+Route::get('registers/{id}', [ApiController\RegisterController::class, 'getRegister']);
 Route::get('registers/current', [ApiController\RegisterController::class, 'current']);
 Route::get('registers/current/bet', [ApiController\RegisterController::class, 'list']);
 Route::get('registers/current/total', [ApiController\RegisterController::class, 'total']);
