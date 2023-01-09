@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "cboden/ratchet": "^0.4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "grpc/grpc": "^1.38",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
         "laravel/nova": "*",
