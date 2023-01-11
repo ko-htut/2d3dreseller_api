@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "twodlottery",
+  "private_key_id": "d88509dc61e3e645a3a897261a21aa4449f00853",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCfZ4vLPCdVSh+J\nfD2C1FznQfgrd5l8mD+t3FkqqvBOMzEqJCzXTcFhNkvMy1dZms+fR7Dd4ikxLRFF\n30Bj8CVHNHLYEe4UtCFxsBIhj6LFieaAyUfY54BNFcWB5EQ/p+NDGpsQBuAvwTJ/\nJCWZ7iVZG/34HjktzkJJLL42Vm3AAqhtYtcuYghCVoX3j2RC6zFcIvqmxfGm2zaS\ngaIxUYgjcj2FjXsN/BH2qVNMNwOzM26X2Rx8FI/W7OKDJDZcp8F6RvHsZO5endhc\nBuV7S+bWWCxGxdgF2rX9/32iz123VzM4A2rHT3dbvtTlJJFOA9IXK1lRrfaN185c\nR/EQc1ULAgMBAAECggEAAXmyQ7cJC9atx5ZguiBxklXlqlVUCgqFPxE1kNL6xn67\nel6FzkRLEN8LVcbZRlpnlis9VbCf9X3Yal2rofC75hTb1BHzfs5z84xVFw+X950l\ncjJUPiqwa2Hn66IpwvRdkIOqRSCjKgyw7P/DJkBTM3ChCOInfH2u+VnXyY9Ct00G\n7gMi+YXmhcIfpClie6X924Qx2dpT/mICh6HeFZzaP1BlqxrLwoXuFFb37VSbeMWa\nt6j7OmjaN0noAeqn2R/dgvjj1/80wuRIa+rU3geVQ3RVkuHvoJCICFvO2EBeoJEQ\nH1OKp2WtRzWTwo3XkUeg4ZjIDhGKLkmjtvrKD3rS0QKBgQDS1L57A3KV8I/ZJEp4\nVc8sfq3Ghy0UcamylCCx470cBRqzDj2Wrq58eeqCgrOoy4iABbgTxS11vHaT+gd3\n77IiQwGL52GG+uNDiHijCYaFFu4+IWO5k8ST8LV/hl+Wqm6JcRLGHuez6cDFniLl\nigm4Z88TUDl2DrG5kkrs7LYU+wKBgQDBjkHKj2MoKXpv4sbWMcUK5Ut432Z9Wyzg\nNiu+oAGhI7AImmtDDbCZhQpZsShEXBy7inuRfrWP7d5T/oG6KrfFLTZUFchS3jiJ\nJD2WWI4l41qlKWrBUsh1uu75jUxZXVopsJae46LaxKRDom0ETVSJX3PZZmhVnOjo\nVWJuS0EjMQKBgQCE+Ue2oKMJ7PNdemU55q1HnBKQj7ugFFx61LCWYlRpMtL3Mjko\nK77DpcWCUVttUAok7PaACbI1ewuzI1TIkbbhoy97hRFfKChk9NNZyW09zguvxjF2\n37txr7VZ3G+3wID9UQMNUHrFX96FBctuyRR+aYMS5FuJmZUAvUNikZ36NwKBgFs9\nILxIXRh4fPOy9cHQUi7xqWMABAMBcKT8RCCmsj3wYbGcgQVptZ6YfSmMfgvDU/P/\nsoICNbn0CgKUDTjhnCEBUAPRBM4zXHkhMTrm4ZLwmjES1fTtffspNC9EsQHLJI5U\nZJvfeEwht8D+Ft+ZSEk9SpHnWTVKMuwaG70cEkdxAoGBANHqTA94m7g/rpvywiCH\n8lyMjZOnR5wvhV6TUbditcQ39mG6r5xxwNppR5tb+brt3d0B4chQ4oSd0twbIRQY\nd0WEKtaFVp2fgznBcGvzmGhEdQJabpdR49W79Y/VgMIJpoM0bqF7rn/tDD0ZtOB2\nyf1zeiF8mymNattsVhs9vDvq\n-----END PRIVATE KEY-----\n",
+  "client_email": "webservicefirestore@twodlottery.iam.gserviceaccount.com",
+  "client_id": "114952466836182964093",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/webservicefirestore%40twodlottery.iam.gserviceaccount.com"
+}
