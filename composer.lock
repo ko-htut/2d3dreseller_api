@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c82b950eb57c6f6a34adad49f820ceba",
+    "content-hash": "9c9781df94e84862edacf11dd3a097de",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -303,6 +303,99 @@
                 "source": "https://github.com/ratchetphp/Ratchet/tree/v0.4.4"
             },
             "time": "2021-12-14T00:20:41+00:00"
+        },
+        {
+            "name": "cloudcake/nova-fixed-bars",
+            "version": "v1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cloudcake/nova-fixed-bars.git",
+                "reference": "8e8da9fbf5df21d0fd87984e4f2bbc2018986128"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cloudcake/nova-fixed-bars/zipball/8e8da9fbf5df21d0fd87984e4f2bbc2018986128",
+                "reference": "8e8da9fbf5df21d0fd87984e4f2bbc2018986128",
+                "shasum": ""
+            },
+            "require": {
+                "gregoriohc/laravel-nova-theme-responsive": "~0.6",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NovaFixedBars\\NovaFixedBarsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NovaFixedBars\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova package to add a responsive and/or fixed sidebar and navigation bar to the Nova admin UI.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/cloudcake/nova-fixed-bars/issues",
+                "source": "https://github.com/cloudcake/nova-fixed-bars/tree/v1.1.4"
+            },
+            "time": "2020-01-10T22:36:36+00:00"
+        },
+        {
+            "name": "cloudcake/nova-snowball",
+            "version": "v1.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cloudcake/nova-snowball.git",
+                "reference": "1b809e2d33cd0589b850d00b618c280f88ce2725"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cloudcake/nova-snowball/zipball/1b809e2d33cd0589b850d00b618c280f88ce2725",
+                "reference": "1b809e2d33cd0589b850d00b618c280f88ce2725",
+                "shasum": ""
+            },
+            "require": {
+                "cloudcake/nova-fixed-bars": "^1.0.6",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NovaSnowball\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NovaSnowball\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A beautiful contrast of dark blue and white packaged for Laravel Nova as a theme.",
+            "keywords": [
+                "laravel",
+                "nova",
+                "theme"
+            ],
+            "support": {
+                "issues": "https://github.com/cloudcake/nova-snowball/issues",
+                "source": "https://github.com/cloudcake/nova-snowball/tree/v1.2.8"
+            },
+            "time": "2020-12-31T07:31:42+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1895,6 +1988,61 @@
                 }
             ],
             "time": "2022-07-30T15:56:11+00:00"
+        },
+        {
+            "name": "gregoriohc/laravel-nova-theme-responsive",
+            "version": "v0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gregoriohc/laravel-nova-theme-responsive.git",
+                "reference": "a37f8162872ea7483d2dec7091d29e49376df273"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gregoriohc/laravel-nova-theme-responsive/zipball/a37f8162872ea7483d2dec7091d29e49376df273",
+                "reference": "a37f8162872ea7483d2dec7091d29e49376df273",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gregoriohc\\LaravelNovaThemeResponsive\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gregoriohc\\LaravelNovaThemeResponsive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregorio Hernández Caso",
+                    "email": "gregoriohc@gmail.com",
+                    "homepage": "https://github.com/gregoriohc",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova responsive theme.",
+            "homepage": "https://github.com/gregoriohc/laravel-nova-theme-responsive",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/gregoriohc/laravel-nova-theme-responsive/issues",
+                "source": "https://github.com/gregoriohc/laravel-nova-theme-responsive/tree/master"
+            },
+            "abandoned": true,
+            "time": "2020-03-08T16:15:03+00:00"
         },
         {
             "name": "grpc/grpc",
@@ -11951,5 +12099,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
