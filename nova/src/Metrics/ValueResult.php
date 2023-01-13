@@ -6,17 +6,19 @@ use JsonSerializable;
 
 class ValueResult implements JsonSerializable
 {
+    use TransformsResults;
+
     /**
      * The value of the result.
      *
-     * @var mixed
+     * @var int|float|numeric-string|null
      */
     public $value;
 
     /**
      * The previous value.
      *
-     * @var mixed
+     * @var int|float|numeric-string|null
      */
     public $previous;
 
@@ -53,7 +55,7 @@ class ValueResult implements JsonSerializable
      *
      * @var string
      */
-    public $format;
+    public $format = '(0[.]00a)';
 
     /**
      * Determines whether a value of 0 counts as "No Current Data".
@@ -63,9 +65,23 @@ class ValueResult implements JsonSerializable
     public $zeroResult = false;
 
     /**
+     * Indicates if the metric value is copyable inside Nova.
+     *
+     * @var bool
+     */
+    public $copyable = false;
+
+    /**
+     * The metric tooltip value formatting.
+     *
+     * @var string
+     */
+    public $tooltipFormat = '(0[.]00a)';
+
+    /**
      * Create a new value result instance.
      *
-     * @param  mixed  $value
+     * @param  int|float|numeric-string|null  $value
      * @return void
      */
     public function __construct($value)
@@ -76,7 +92,7 @@ class ValueResult implements JsonSerializable
     /**
      * Set the previous value for the metric.
      *
-     * @param  mixed  $previous
+     * @param  int|float|numeric-string|null  $previous
      * @param  string  $label
      * @return $this
      */
@@ -162,6 +178,19 @@ class ValueResult implements JsonSerializable
     }
 
     /**
+     * Set the metric value tooltip formatting.
+     *
+     * @param  string  $format
+     * @return $this
+     */
+    public function tooltipFormat($format)
+    {
+        $this->tooltipFormat = $format;
+
+        return $this;
+    }
+
+    /**
      * Sets the zeroResult value.
      *
      * @param  bool  $zeroResult
@@ -175,20 +204,34 @@ class ValueResult implements JsonSerializable
     }
 
     /**
+     * Allow the metric value to be copyable to the clipboard inside Nova.
+     *
+     * @return $this
+     */
+    public function copyable()
+    {
+        $this->copyable = true;
+
+        return $this;
+    }
+
+    /**
      * Prepare the metric result for JSON serialization.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
-            'value' => $this->value,
-            'previous' => $this->previous,
-            'previousLabel' => $this->previousLabel,
+            'copyable' => $this->copyable,
+            'format' => $this->format,
             'prefix' => $this->prefix,
+            'previous' => $this->resolveTransformedValue($this->previous),
+            'previousLabel' => $this->previousLabel,
             'suffix' => $this->suffix,
             'suffixInflection' => $this->suffixInflection,
-            'format' => $this->format,
+            'tooltipFormat' => $this->tooltipFormat,
+            'value' => $this->resolveTransformedValue($this->value),
             'zeroResult' => $this->zeroResult,
         ];
     }

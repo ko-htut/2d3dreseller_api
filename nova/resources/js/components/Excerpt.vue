@@ -1,28 +1,30 @@
 <template>
-  <div v-if="shouldShow && hasContent">
+  <div v-if="shouldShow && hasContent" class="break-normal">
     <div
-      class="markdown leading-normal"
+      class="prose prose-sm dark:prose-invert"
       :class="{ 'whitespace-pre-wrap': plainText }"
       v-html="content"
     />
   </div>
-  <div v-else-if="hasContent">
+  <div v-else-if="hasContent" class="break-normal">
     <div
       v-if="expanded"
-      class="markdown leading-normal"
+      class="prose prose-sm dark:prose-invert"
       :class="{ 'whitespace-pre-wrap': plainText }"
       v-html="content"
     />
 
-    <a
+    <button
+      type="button"
       v-if="!shouldShow"
       @click="toggle"
-      class="cursor-pointer dim inline-block text-primary font-bold"
+      class="link-default"
       :class="{ 'mt-6': expanded }"
       aria-role="button"
+      tabindex="0"
     >
       {{ showHideLabel }}
-    </a>
+    </button>
   </div>
   <div v-else>&mdash;</div>
 </template>

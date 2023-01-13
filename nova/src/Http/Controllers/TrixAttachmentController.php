@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class TrixAttachmentController extends Controller
@@ -11,10 +12,11 @@ class TrixAttachmentController extends Controller
      * Store an attachment for a Trix field.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(NovaRequest $request)
     {
+        /** @var \Laravel\Nova\Fields\Field&\Laravel\Nova\Fields\Trix $field */
         $field = $request->newResource()
                         ->availableFields($request)
                         ->findFieldByAttribute($request->field, function () {
@@ -34,6 +36,7 @@ class TrixAttachmentController extends Controller
      */
     public function destroyAttachment(NovaRequest $request)
     {
+        /** @var \Laravel\Nova\Fields\Field&\Laravel\Nova\Fields\Trix $field */
         $field = $request->newResource()
                         ->availableFields($request)
                         ->findFieldByAttribute($request->field, function () {
@@ -43,6 +46,8 @@ class TrixAttachmentController extends Controller
         call_user_func(
             $field->detachCallback, $request
         );
+
+        return response()->noContent(200);
     }
 
     /**
@@ -53,6 +58,7 @@ class TrixAttachmentController extends Controller
      */
     public function destroyPending(NovaRequest $request)
     {
+        /** @var \Laravel\Nova\Fields\Field&\Laravel\Nova\Fields\Trix $field */
         $field = $request->newResource()
                         ->availableFields($request)
                         ->findFieldByAttribute($request->field, function () {
@@ -62,5 +68,20 @@ class TrixAttachmentController extends Controller
         call_user_func(
             $field->discardCallback, $request
         );
+
+        return response()->noContent(200);
+    }
+
+    /**
+     * Return a new draft ID for the field.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function draftId(NovaRequest $request)
+    {
+        return response()->json([
+            'draftId' => Str::uuid(),
+        ]);
     }
 }

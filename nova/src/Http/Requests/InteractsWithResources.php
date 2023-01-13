@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova\Http\Requests;
 
+use Laravel\Nova\Contracts\QueryBuilder;
 use Laravel\Nova\Nova;
 
 trait InteractsWithResources
@@ -43,20 +44,23 @@ trait InteractsWithResources
     /**
      * Get the class name of the resource being requested.
      *
-     * @return mixed
+     * @return class-string<\Laravel\Nova\Resource>
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function resource()
     {
-        return tap(Nova::resourceForKey($this->route('resource')), function ($resource) {
+        return tap(once(function () {
+            return Nova::resourceForKey($this->route('resource'));
+        }), function ($resource) {
             abort_if(is_null($resource), 404);
-            abort_if(! $resource::authorizedToViewAny($this), 403);
         });
     }
 
     /**
      * Get a new instance of the resource being requested.
      *
-     * @return \Laravel\Nova\Resource
+     * @return \Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>
      */
     public function newResource()
     {
@@ -66,10 +70,12 @@ trait InteractsWithResources
     }
 
     /**
-     * Find the resource model instance for the request.
+     * Find the resource instance for the request or abort.
      *
-     * @param  mixed|null  $resourceId
-     * @return \Laravel\Nova\Resource
+     * @param  string|int|null  $resourceId
+     * @return \Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function findResourceOrFail($resourceId = null)
     {
@@ -77,20 +83,46 @@ trait InteractsWithResources
     }
 
     /**
-     * Find the model instance for the request.
+     * Find the resource instance for the request.
      *
-     * @param  mixed|null  $resourceId
+     * @param  string|int|null  $resourceId
+     * @return \Laravel\Nova\Resource
+     */
+    public function findResource($resourceId = null)
+    {
+        return $this->newResourceWith($this->findModel($resourceId));
+    }
+
+    /**
+     * Find the model instance for the request or throw an exception.
+     *
+     * @param  string|int|null  $resourceId
      * @return \Illuminate\Database\Eloquent\Model
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function findModelOrFail($resourceId = null)
     {
-        if ($resourceId) {
+        if (! is_null($resourceId)) {
             return $this->findModelQuery($resourceId)->firstOrFail();
         }
 
         return once(function () {
             return $this->findModelQuery()->firstOrFail();
         });
+    }
+
+    /**
+     * Find the model instance for the request.
+     *
+     * @param  string|int|null  $resourceId
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function findModel($resourceId = null)
+    {
+        return rescue(function () use ($resourceId) {
+            return $this->findModelOrFail($resourceId);
+        }, $this->model(), false);
     }
 
     /**
@@ -101,16 +133,18 @@ trait InteractsWithResources
      */
     public function findModelQuery($resourceId = null)
     {
-        return $this->newQueryWithoutScopes()->whereKey(
-            $resourceId ?? $this->resourceId
-        );
+        return app()->make(QueryBuilder::class, [$this->resource()])
+                    ->whereKey(
+                        $this->newQueryWithoutScopes(),
+                        $resourceId ?? $this->resourceId
+                    )->toBase();
     }
 
     /**
      * Get a new instance of the resource being requested.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return \Laravel\Nova\Resource
+     * @return \Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>
      */
     public function newResourceWith($model)
     {

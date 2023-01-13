@@ -3,11 +3,18 @@
 namespace Laravel\Nova\Trix;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Trix;
 
+/**
+ * @property string $attachment
+ * @property string $disk
+ */
 class PendingAttachment extends Model
 {
+    use Prunable;
+
     /**
      * The table associated with the model.
      *
@@ -58,14 +65,22 @@ class PendingAttachment extends Model
     }
 
     /**
-     * Purge the attachment.
+     * Get the prunable model query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subDays(1));
+    }
+
+    /**
+     * Prepare the model for pruning.
      *
      * @return void
      */
-    public function purge()
+    protected function pruning()
     {
         Storage::disk($this->disk)->delete($this->attachment);
-
-        $this->delete();
     }
 }

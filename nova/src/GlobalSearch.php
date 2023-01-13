@@ -17,7 +17,7 @@ class GlobalSearch
     /**
      * The resource class names that should be searched.
      *
-     * @var array
+     * @var array<int, class-string<\Laravel\Nova\Resource>>
      */
     public $resources;
 
@@ -25,7 +25,7 @@ class GlobalSearch
      * Create a new global search instance.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param  array  $resources
+     * @param  array<int, class-string<\Laravel\Nova\Resource>>  $resources
      * @return void
      */
     public function __construct(NovaRequest $request, $resources)
@@ -37,7 +37,7 @@ class GlobalSearch
     /**
      * Get the matching resources.
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     public function get()
     {
@@ -61,6 +61,7 @@ class GlobalSearch
                 ->cursor()
                 ->mapInto($resourceClass)
                 ->map(function ($resource) use ($resourceClass) {
+                    /** @var \Laravel\Nova\Resource $resource */
                     return $this->transformResult($resourceClass, $resource);
                 });
         }
@@ -69,9 +70,11 @@ class GlobalSearch
     /**
      * Transform the result from resource.
      *
-     * @param  string  $resourceClass
-     * @param  \Laravel\Nova\Resource  $resource
-     * @return array
+     * @template TResourceValue of \Laravel\Nova\Resource
+     *
+     * @param  class-string<TResourceValue>  $resourceClass
+     * @param  TResourceValue  $resource
+     * @return array<string, mixed>
      */
     protected function transformResult($resourceClass, Resource $resource)
     {
@@ -84,8 +87,8 @@ class GlobalSearch
             'subTitle' => transform($resource->subtitle(), function ($subtitle) {
                 return (string) $subtitle;
             }),
-            'resourceId' => $model->getKey(),
-            'url' => url(Nova::path().'/resources/'.$resourceClass::uriKey().'/'.$model->getKey()),
+            'resourceId' => Util::safeInt($model->getKey()),
+            'url' => url(Nova::url('/resources/'.$resourceClass::uriKey().'/'.$model->getKey())),
             'avatar' => $resource->resolveAvatarUrl($this->request),
             'rounded' => $resource->resolveIfAvatarShouldBeRounded($this->request),
             'linksTo' => $resource->globalSearchLink($this->request),

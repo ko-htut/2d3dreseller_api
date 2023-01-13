@@ -2,23 +2,30 @@
   <trix-editor
     ref="theEditor"
     @keydown.stop
+    :input="uid"
+    v-bind="$attrs"
     @trix-change="handleChange"
     @trix-initialize="initialize"
     @trix-attachment-add="handleAddFile"
     @trix-attachment-remove="handleRemoveFile"
     @trix-file-accept="handleFileAccept"
-    :value="value"
     :placeholder="placeholder"
-    class="trix-content"
+    class="trix-content prose !max-w-full prose-sm dark:prose-invert"
   />
+  <input type="hidden" :name="name" :id="uid" :value="value" />
 </template>
 
 <script>
+import { uid } from 'uid/single'
 import Trix from 'trix'
 import 'trix/dist/trix.css'
 
 export default {
   name: 'trix-vue',
+
+  inheritAttrs: false,
+
+  emits: ['change', 'file-added', 'file-removed'],
 
   props: {
     name: { type: String },
@@ -28,6 +35,11 @@ export default {
     disabled: { type: Boolean, default: false },
   },
 
+  data: () => ({
+    uid: uid(),
+    loading: true,
+  }),
+
   methods: {
     initialize() {
       this.$refs.theEditor.editor.insertHTML(this.value)
@@ -35,10 +47,14 @@ export default {
       if (this.disabled) {
         this.$refs.theEditor.setAttribute('contenteditable', false)
       }
+
+      this.loading = false
     },
 
     handleChange() {
-      this.$emit('change', this.$refs.theEditor.value)
+      if (!this.loading) {
+        this.$emit('change', this.$refs.theEditor.value)
+      }
     },
 
     handleFileAccept(e) {
@@ -48,11 +64,11 @@ export default {
     },
 
     handleAddFile(event) {
-      this.$emit('file-add', event)
+      this.$emit('file-added', event)
     },
 
     handleRemoveFile(event) {
-      this.$emit('file-remove', event)
+      this.$emit('file-removed', event)
     },
   },
 }

@@ -1,8 +1,13 @@
 <template>
-  <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
-    <template slot="field">
+  <DefaultField
+    :field="field"
+    :errors="errors"
+    :show-help-text="showHelpText"
+    :full-width-content="fullWidthContent"
+  >
+    <template #field>
       <input
-        :id="field.name"
+        :id="field.attribute"
         type="text"
         class="w-full form-control form-input form-input-bordered"
         :class="errorClasses"
@@ -10,7 +15,7 @@
         v-model="value"
       />
     </template>
-  </default-field>
+  </DefaultField>
 </template>
 
 <script>

@@ -2,9 +2,13 @@
 
 namespace Laravel\Nova\Fields;
 
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Util;
 
+/**
+ * @method static static make(mixed $name = null, string|null $attribute = null, callable|null $resolveCallback = null)
+ */
 class ID extends Field
 {
     /**
@@ -26,7 +30,7 @@ class ID extends Field
      *
      * @param  string|null  $name
      * @param  string|null  $attribute
-     * @param  mixed|null  $resolveCallback
+     * @param  (callable(mixed, mixed, ?string):(mixed))|null  $resolveCallback
      * @return void
      */
     public function __construct($name = null, $attribute = null, $resolveCallback = null)
@@ -38,19 +42,15 @@ class ID extends Field
      * Create a new, resolved ID field for the given resource.
      *
      * @param  \Laravel\Nova\Resource  $resource
-     * @return static
+     * @return static|null
      */
     public static function forResource($resource)
     {
         $model = $resource->model();
 
-        $methods = collect(['fieldsForIndex', 'fieldsForDetail'])
-            ->filter(function ($method) use ($resource) {
-                return method_exists($resource, $method);
-            })->all();
-
+        /** @var static|null $field */
         $field = transform(
-            $resource->buildAvailableFields(app(NovaRequest::class), $methods)
+            $resource->availableFieldsOnIndexOrDetail(app(NovaRequest::class))
                     ->whereInstanceOf(self::class)
                     ->first(),
             function ($field) use ($model) {
@@ -61,7 +61,11 @@ class ID extends Field
             }
         );
 
-        return empty($field->value) && $field->nullable !== true ? null : $field;
+        if ($field instanceof static) {
+            return empty($field->value) && $field->nullable !== true ? null : $field;
+        }
+
+        return null;
     }
 
     /**
@@ -92,8 +96,12 @@ class ID extends Field
      */
     protected function resolveAttribute($resource, $attribute)
     {
-        if (! is_null($resource)) {
-            $pivotValue = optional($resource->pivot)->getKey();
+        if ($resource instanceof Model) {
+            $pivotAccessor = $this->pivotAccessor ?? 'pivot';
+
+            $pivotValue = $resource->relationLoaded($pivotAccessor)
+                ? optional($resource->{$pivotAccessor})->getKey()
+                : null;
 
             if (is_int($pivotValue) || is_string($pivotValue)) {
                 $this->pivotValue = $pivotValue;
@@ -137,9 +145,9 @@ class ID extends Field
     /**
      * Prepare the field for JSON serialization.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), array_filter([
             'pivotValue' => $this->pivotValue ?? null,

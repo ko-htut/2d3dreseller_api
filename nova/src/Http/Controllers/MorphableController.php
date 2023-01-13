@@ -13,20 +13,20 @@ class MorphableController extends Controller
      * List the available morphable resources for a given resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function index(NovaRequest $request)
+    public function __invoke(NovaRequest $request)
     {
         $relatedResource = Nova::resourceForKey($request->type);
 
         abort_if(is_null($relatedResource), 403);
 
         $field = $request->newResource()
-                        ->availableFields($request)
+                        ->availableFieldsOnIndexOrDetail($request)
                         ->whereInstanceOf(RelatableField::class)
                         ->findFieldByAttribute($request->field, function () {
                             abort(404);
-                        });
+                        })->applyDependsOn($request);
 
         $withTrashed = $this->shouldIncludeTrashed(
             $request, $relatedResource
@@ -36,6 +36,8 @@ class MorphableController extends Controller
                     ? $relatedResource::$scoutSearchResults
                     : $relatedResource::$relatableSearchResults;
 
+        $shouldReorderAssociatableValues = $field->shouldReorderAssociatableValues($request) && ! $relatedResource::usesScout();
+
         return [
             'resources' => $field->buildMorphableQuery($request, $relatedResource, $withTrashed)
                                 ->take($limit)
@@ -44,7 +46,9 @@ class MorphableController extends Controller
                                 ->filter->authorizedToAdd($request, $request->model())
                                 ->map(function ($resource) use ($request, $field, $relatedResource) {
                                     return $field->formatMorphableResource($request, $resource, $relatedResource);
-                                })->sortBy('display')->values(),
+                                })->when($shouldReorderAssociatableValues, function ($collection) {
+                                    return $collection->sortBy('display');
+                                })->values(),
             'withTrashed' => $withTrashed,
             'softDeletes' => $relatedResource::softDeletes(),
         ];

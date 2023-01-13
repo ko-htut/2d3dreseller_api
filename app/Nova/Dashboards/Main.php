@@ -2,11 +2,11 @@
 
 namespace App\Nova\Dashboards;
 
-use Laravel\Nova\Dashboard;
+use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Dashboards\Main as Dashboard;
 
 class Main extends Dashboard
-{  
-    
+{
     /**
      * Get the cards for the dashboard.
      *
@@ -15,18 +15,7 @@ class Main extends Dashboard
     public function cards()
     {
         return [
-            //
+            new Help,
         ];
     }
-
-    /**
-     * Get the URI key for the dashboard.
-     *
-     * @return string
-     */
-    public static function uriKey()
-    {
-        return 'main';
-    }
-
 }

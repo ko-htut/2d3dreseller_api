@@ -1,95 +1,59 @@
 <template>
-  <loading-card
-    ref="card"
-    :loading="loading"
-    class="card relative border border-lg border-50 overflow-hidden px-0 py-0"
-    :class="cardClasses"
-    :style="cardStyles"
-  >
-    <div class="missing p-8" v-if="missing">
-      <p class="text-center leading-normal">
-        <a :href="src" class="text-primary dim" target="_blank">{{
-          __('This image')
-        }}</a>
-        {{ __('could not be found.') }}
-      </p>
-    </div>
-  </loading-card>
+  <span v-if="!error">
+    <img
+      :class="classes"
+      :style="styles"
+      :src="src"
+      @load="handleLoad"
+      @error="handleError"
+    />
+  </span>
+  <a v-else :href="src">
+    <Icon
+      type="exclamation-circle"
+      class="text-red-500"
+      v-tooltip="__('The image could not be loaded.')"
+    />
+  </a>
 </template>
 
-<script>
-import { Minimum } from 'laravel-nova'
+<script setup>
+import { computed, ref } from 'vue'
+import { useLocalization } from '@/mixins/Localization'
 
-export default {
-  props: {
-    src: String,
+const { __ } = useLocalization()
 
-    maxWidth: {
-      type: Number,
-      default: 320,
-    },
-
-    rounded: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  src: { type: String },
+  maxWidth: { type: Number, default: 320 },
+  rounded: { type: Boolean, default: false },
+  aspect: {
+    type: String,
+    default: 'aspect-auto',
+    validator: v => ['aspect-auto', 'aspect-square'].includes(v),
   },
+})
 
-  data: () => ({
-    loading: true,
-    missing: false,
-  }),
+const loaded = ref(false)
+const error = ref(false)
 
-  computed: {
-    cardClasses() {
-      return {
-        'max-w-xs': !this.maxWidth || this.loading || this.missing,
-        'rounded-full': this.rounded,
-      }
-    },
-
-    cardStyles() {
-      return this.loading
-        ? { height: this.maxWidth + 'px', width: this.maxWidth + 'px' }
-        : null
-    },
-  },
-
-  mounted() {
-    Minimum(
-      new Promise((resolve, reject) => {
-        let image = new Image()
-
-        image.addEventListener('load', () => resolve(image))
-        image.addEventListener('error', () => reject())
-
-        image.src = this.src
-      })
-    )
-      .then(image => {
-        image.className = 'block w-full'
-        image.draggable = false
-
-        if (this.maxWidth) {
-          this.$refs.card.$el.style.maxWidth = `${this.maxWidth}px`
-        }
-
-        this.$refs.card.$el.appendChild(image)
-      })
-      .catch(() => {
-        this.missing = true
-
-        this.$emit('missing', true)
-      })
-      .finally(() => {
-        this.loading = false
-      })
-  },
+const handleLoad = () => (loaded.value = true)
+const handleError = () => {
+  error.value = true
+  Nova.log(`${__('The image could not be loaded.')}: ${props.src}`)
 }
+
+const classes = computed(() => [props.rounded && 'rounded-full'])
+
+const styles = computed(() => ({
+  'max-width': `${props.maxWidth}px`,
+  ...(props.aspect === 'aspect-square' && { width: `${props.maxWidth}px` }),
+  ...(props.aspect === 'aspect-square' && { height: `${props.maxWidth}px` }),
+}))
 </script>
 
-<style scoped>
-.card {
-  padding: 0 !important;
+<script>
+export default {
+  inheritAttrs: false,
 }
-</style>
+</script>

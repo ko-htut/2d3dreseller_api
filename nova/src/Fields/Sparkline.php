@@ -6,7 +6,7 @@ use Closure;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Trend;
 
-class Sparkline extends Field
+class Sparkline extends Field implements Unfillable
 {
     /**
      * The field's component.
@@ -18,7 +18,7 @@ class Sparkline extends Field
     /**
      * The data used in the chart.
      *
-     * @var array|\Closure|\Laravel\Nova\Metrics\Trend
+     * @var array|(\Closure(\Laravel\Nova\Http\Requests\NovaRequest):(mixed))|\Laravel\Nova\Metrics\Trend
      */
     public $data = [];
 
@@ -32,21 +32,21 @@ class Sparkline extends Field
     /**
      * Indicates if the element should be shown on the creation view.
      *
-     * @var \Closure|bool
+     * @var (callable(\Laravel\Nova\Http\Requests\NovaRequest):(bool))|bool
      */
     public $showOnCreation = false;
 
     /**
      * Indicates if the element should be shown on the update view.
      *
-     * @var \Closure|bool
+     * @var (callable(\Laravel\Nova\Http\Requests\NovaRequest, mixed):(bool))|bool
      */
     public $showOnUpdate = false;
 
     /**
      * Set the data for the Spark Line.
      *
-     * @param  array|\Closure|\Laravel\Nova\Metrics\Trend  $data
+     * @param  array|(\Closure(\Laravel\Nova\Http\Requests\NovaRequest):(mixed))|\Laravel\Nova\Metrics\Trend  $data
      * @return $this
      */
     public function data($data)
@@ -68,14 +68,14 @@ class Sparkline extends Field
             $ranges = $this->data->ranges();
             $defaultRange = array_key_first($ranges);
 
-            $result = $this->data->calculate(
-                $request->merge([
-                    'range' => $defaultRange,
-                    'resourceId' => $this->data->component,
-                ])
+            return array_values(
+                $this->data->calculate(
+                    $request->merge([
+                        'range' => $defaultRange,
+                        'resourceId' => $this->data->component,
+                    ])
+                )->trend ?? []
             );
-
-            return array_values($this->data->calculate($request)->trend ?? []);
         } elseif ($this->data instanceof Closure) {
             return call_user_func($this->data, $request);
         }
@@ -124,9 +124,9 @@ class Sparkline extends Field
     /**
      * Prepare the element for JSON serialization.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [
             'chartStyle' => $this->chartStyle,
