@@ -20,10 +20,10 @@ class Kernel extends ConsoleKernel
         $schedule->call('\App\Http\Controllers\FirestoreController@twoDLive')->timezone('Asia/Yangon')->cron('* * * * 1-5');
     }
 
-    // protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
-    // {
-    //     $shortSchedule->command('twod:live')->everySecond(20);
-    // }
+    protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
+    {
+        $shortSchedule->command('twod:live')->everySecond(1);
+    }
 
     protected function commands()
     {

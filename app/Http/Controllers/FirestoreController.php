@@ -58,5 +58,6 @@ class FirestoreController extends Controller
         $docRef->set($data);
         return $data;
             
+   
     }
 }

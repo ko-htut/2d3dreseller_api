@@ -3,7 +3,15 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Goutte;
+use Log;
 
+use App\Models\TwoDWonNumber;
+use App\Models\TwoDChangeNumber;
 class TwoDLiveUpdate extends Command
 {
     /**
@@ -27,7 +35,8 @@ class TwoDLiveUpdate extends Command
 
     public function handle()
     {
-        app(\App\Http\Controllers\TwoDLiveController::class)->update();
-        $this->info('Finish Command For 2D Live');
+        // FirestoreController@twoDLive
+        app(\App\Http\Controllers\FirestoreController::class)->twoDLive();
+        $this->info('Finish Command For 2D Live');   
     }
 }
