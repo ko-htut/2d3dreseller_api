@@ -30,7 +30,10 @@ class FirestoreController extends Controller
             $currentHour = Carbon::now()->format('H');
             $currentMin = Carbon::now()->format('i');
             $time_type = null;
-            $toDay = now()->toDateString();
+            // to myanmar time zome
+            
+            // tom
+            $toDay = now()->toDateTime();
     
             if($currentHour > "6" && $currentHour < "12" ||
                 $currentHour == "6" && $currentMin >= "00" ||
@@ -48,12 +51,7 @@ class FirestoreController extends Controller
                             'time_type' => $time_type,
                             'now' => $toDay
                         ];
-
-                        
-        
-                      $data['live'] = $live;
-                      
-                      
+        $data['live'] = $live;   
         $db = app('firebase.firestore')->database();
         $docRef = $db->collection('live')->document('2d');
         $docRef->set($data);
