@@ -45,7 +45,8 @@ class FirestoreController extends Controller
                             'val' => $item['val'],
                             'result' => $item['result'],
                             'updated_at' => $item['date'],
-                            'time_type' => $time_type
+                            'time_type' => $time_type,
+                            'now' => $toDay
                         ];
 
                         
