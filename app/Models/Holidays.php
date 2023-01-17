@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Holiday extends Model
+class Holidays extends Model
 {
-    use HasFactory;
+ use HasFactory;
 
     protected $fillable = [
         'year',
@@ -17,5 +17,4 @@ class Holiday extends Model
         'note',
         'note_mm'
     ];
-
 }

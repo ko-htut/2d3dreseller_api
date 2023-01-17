@@ -4,8 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Illuminate\Http\Request;
+use App\Models\Holidays;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -17,6 +21,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        // Nova::mainMenu(
+        //     function(Request $request){
+        //         return[
+        //             MenuSection::make('Holidays',[
+        //                 MenuItem::resource(Holidays::class),
+        //             ])->icon('user')->collapsable(),
+
+        //         ];
+        //     }
+        // );
     }
 
     /**
