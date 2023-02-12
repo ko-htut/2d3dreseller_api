@@ -9,8 +9,16 @@ use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Illuminate\Http\Request;
-use App\Models\Holidays;
-
+use App\Nova\Dashboards\Main;
+use App\Nova\Dashboards\TwoDAnalytics;
+use App\Nova\Dashboards\BetAnalytics;
+use App\Nova\Dashboards\UserAnalytics;
+use App\Nova\User;
+use App\Nova\Admin;
+use App\Nova\Holidays;
+use App\Nova\VoucherClose;
+use App\Nova\VoucherOpen;
+use App\Nova\Voucher;
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
     /**
@@ -22,16 +30,30 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
-        // Nova::mainMenu(
-        //     function(Request $request){
-        //         return[
-        //             MenuSection::make('Holidays',[
-        //                 MenuItem::resource(Holidays::class),
-        //             ])->icon('user')->collapsable(),
-
-        //         ];
-        //     }
-        // );
+        Nova::mainMenu(
+            function(Request $request){
+                return[
+                    MenuSection::dashboard(Main::class)->icon('chart-bar'),
+                    MenuSection::make("Analystics",[
+                        MenuItem::dashboard(TwoDAnalytics::class),
+                        MenuItem::dashboard(UserAnalytics::class),
+                        MenuItem::dashboard(BetAnalytics::class),
+                        // MenuItem::dashboard(GoogleAnalytics::class),
+                    ])->icon('chart-bar')->collapsable(),
+                    MenuSection::make('Vouchers',[
+                        MenuItem::resource(Voucher::class),
+                        MenuItem::resource(VoucherOpen::class),
+                        MenuItem::resource(VoucherClose::class),
+                        // MenuItem::resource(BanList::class),
+                    ])->icon('document-text')->collapsable(),
+                     MenuSection::make('Users',[
+                        MenuItem::resource(User::class),
+                        MenuItem::resource(Admin::class),
+                        // MenuItem::resource(BanList::class),
+                    ])->icon('user')->collapsable(),
+                ];
+            }
+        );
     }
 
     /**
@@ -82,6 +104,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
               new \App\Nova\Dashboards\Main,
+              new \App\Nova\Dashboards\TwoDAnalytics,
+              new \App\Nova\Dashboards\BetAnalytics,
+              new \App\Nova\Dashboards\UserAnalytics,
         ];
     }
 

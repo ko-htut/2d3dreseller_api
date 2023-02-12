@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.7",
         "predis/predis": "^2.0",
         "spatie/laravel-short-schedule": "^1.5",
+        "stepanenko3/nova-cards": "^1.1",
         "weidner/goutte": "^2.2"
     },
     "require-dev": {

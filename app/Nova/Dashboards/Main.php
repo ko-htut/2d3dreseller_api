@@ -4,6 +4,10 @@ namespace App\Nova\Dashboards;
 
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Dashboards\Main as Dashboard;
+// use Stepanenko3\NovaCards\Cards\CacheCard;
+use Stepanenko3\NovaCards\Cards\ScheduledJobsCard;
+use Stepanenko3\NovaCards\Cards\SystemResourcesCard;
+use Stepanenko3\NovaCards\Cards\VersionsCard;
 
 class Main extends Dashboard
 {
@@ -15,7 +19,12 @@ class Main extends Dashboard
     public function cards()
     {
         return [
-            new Help,
+           
+        // (new CacheCard),
+
+        // (new SystemResourcesCard),
+
+        (new VersionsCard),
         ];
     }
 }

@@ -9,6 +9,8 @@ class Holidays extends Model
 {
  use HasFactory;
 
+ 
+
     protected $fillable = [
         'year',
         'month',

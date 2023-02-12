@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15ed0fe89017e91375a245d63271fb23",
+    "content-hash": "fac18b2e1f09b06ae7855d75a7ddcd11",
     "packages": [
         {
             "name": "beste/clock",
@@ -6293,6 +6293,108 @@
                 }
             ],
             "time": "2022-08-23T07:15:15+00:00"
+        },
+        {
+            "name": "stepanenko3/laravel-system-resources",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stepanenko3/laravel-system-resources.git",
+                "reference": "4269cfb453ecb302e5cb00bbe1b9ecb5f041445f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stepanenko3/laravel-system-resources/zipball/4269cfb453ecb302e5cb00bbe1b9ecb5f041445f",
+                "reference": "4269cfb453ecb302e5cb00bbe1b9ecb5f041445f",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=9.0",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Stepanenko3\\LaravelSystemResources\\SystemResourcesServiceProvider"
+                    ],
+                    "aliases": {
+                        "SystemResources": "Stepanenko3\\LaravelSystemResources\\Facades\\SystemResources"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stepanenko3\\LaravelSystemResources\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Artem Stepanenko",
+                    "email": "stpnnk.artem@gmail.com",
+                    "role": "Creator"
+                }
+            ],
+            "description": "Get OS resources from Laravel",
+            "keywords": [
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/stepanenko3/laravel-system-resources/issues",
+                "source": "https://github.com/stepanenko3/laravel-system-resources/tree/v1.0.1"
+            },
+            "time": "2022-05-17T06:35:37+00:00"
+        },
+        {
+            "name": "stepanenko3/nova-cards",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stepanenko3/nova-cards.git",
+                "reference": "486e427c8c5fa68fc974a4e947dc8b0084dd841b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stepanenko3/nova-cards/zipball/486e427c8c5fa68fc974a4e947dc8b0084dd841b",
+                "reference": "486e427c8c5fa68fc974a4e947dc8b0084dd841b",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.0",
+                "php": ">=8.0",
+                "stepanenko3/laravel-system-resources": "^1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Stepanenko3\\NovaCards\\NovaCardsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stepanenko3\\NovaCards\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova info cards.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/stepanenko3/nova-cards/issues",
+                "source": "https://github.com/stepanenko3/nova-cards/tree/v1.1.0"
+            },
+            "time": "2022-04-17T13:22:11+00:00"
         },
         {
             "name": "symfony/browser-kit",
