@@ -24,6 +24,11 @@ Route::get('essentials', [ApiController\EssentialController::class, 'get']);
 
 Route::get('user', [ApiController\UserController::class, 'user']);
 
+
+Route::get('/threedhistory',[HistoryController::class,'getThreeDHistory']);
+Route::get('/tdhistory',[HistoryController::class,'getTwDHistory']);
+Route::get('/lottery/fdhistroy',[HistoryController::class,'getFDHistory']);
+
 // Register Routes
 Route::apiResource('registers', ApiController\RegisterController::class)->except([
     'update', 'destroy', 'show'
