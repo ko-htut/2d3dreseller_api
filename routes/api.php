@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api as ApiController;
-use App\Http\Controllers\Api\User\HistoryController;
+// use App\Http\Controllers\Api\User\HistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +26,9 @@ Route::get('essentials', [ApiController\EssentialController::class, 'get']);
 Route::get('user', [ApiController\UserController::class, 'user']);
 
 
-Route::get('/threedhistory',[HistoryController::class,'getThreeDHistory']);
-Route::get('/tdhistory',[HistoryController::class,'getTwDHistory']);
-Route::get('/lottery/fdhistroy',[HistoryController::class,'getFDHistory']);
+Route::get('/threedhistory',[ApiController\HistoryController::class,'getThreeDHistory']);
+Route::get('/tdhistory',[ApiController\HistoryController::class,'getTwDHistory']);
+Route::get('/lottery/fdhistroy',[ApiController\HistoryController::class,'getFDHistory']);
 
 // Register Routes
 Route::apiResource('registers', ApiController\RegisterController::class)->except([
