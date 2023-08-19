@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api as ApiController;
+use App\Http\Controllers\Api\User\HistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
