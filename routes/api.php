@@ -29,7 +29,7 @@ Route::get('user', [ApiController\UserController::class, 'user']);
 Route::get('/threedhistory',[ApiController\HistoryController::class,'getThreeDHistory']);
 Route::get('/tdhistory',[ApiController\HistoryController::class,'getTwDHistory']);
 Route::get('/lottery/fdhistroy',[ApiController\HistoryController::class,'getFDHistory']);
-Route::get('/ads',[AdsController::class,'getAds']);
+Route::get('/ads',[\App\Http\Controllers\Api\AdsController::class,'getAds']);
 
 // Register Routes
 Route::apiResource('registers', ApiController\RegisterController::class)->except([
