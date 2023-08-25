@@ -22,7 +22,9 @@
         "predis/predis": "^2.0",
         "spatie/laravel-short-schedule": "^1.5",
         "stepanenko3/nova-cards": "^1.1",
-        "weidner/goutte": "^2.2"
+        "weidner/goutte": "^2.2",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "league/flysystem-ftp": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
