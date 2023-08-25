@@ -15,6 +15,7 @@ use App\Nova\Dashboards\BetAnalytics;
 use App\Nova\Dashboards\UserAnalytics;
 use App\Nova\User;
 use App\Nova\Admin;
+use App\Nova\Ads;
 use App\Nova\Holidays;
 use App\Nova\VoucherClose;
 use App\Nova\VoucherOpen;
@@ -50,6 +51,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         MenuItem::resource(User::class),
                         MenuItem::resource(Admin::class),
                         // MenuItem::resource(BanList::class),
+                    ])->icon('user')->collapsable(),
+                      MenuSection::make('Utils',[
+                        MenuItem::resource(Ads::class),
                     ])->icon('user')->collapsable(),
                 ];
             }
