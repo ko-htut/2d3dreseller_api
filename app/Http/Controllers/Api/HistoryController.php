@@ -43,7 +43,7 @@ class HistoryController extends Controller
     public function getTwDHistory()
     {
         try {
-            $url = "https://zarmani2d.com/api/tdhistory";
+            $url = "https://admin.4dmyanthai.com/api/tdhistory";
             $data = $this->fetchDataFromServer($url);
 
             if ($data !== null) {
@@ -59,7 +59,7 @@ class HistoryController extends Controller
     public function getThreeDHistory()
     {
         try {
-            $url = "https://zarmani2d.com/api/tedhistory";
+            $url = "https://admin.4dmyanthai.com/api/tedhistory";
             $data = $this->fetchDataFromServer($url);
 
             if ($data !== null) {
