@@ -199,9 +199,6 @@ return [
 
         App\Providers\NovaServiceProvider::class,
 
-          // Laravel Firebase
-        Kreait\Laravel\Firebase\ServiceProvider::class,
-
         Weidner\Goutte\GoutteServiceProvider::class
 
     ],

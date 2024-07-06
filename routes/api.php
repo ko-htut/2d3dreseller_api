@@ -30,6 +30,7 @@ Route::get('/threedhistory',[ApiController\HistoryController::class,'getThreeDHi
 Route::get('/tdhistory',[ApiController\HistoryController::class,'getTwDHistory']);
 Route::get('/lottery/fdhistroy',[ApiController\HistoryController::class,'getFDHistory']);
 Route::get('/ads',[\App\Http\Controllers\Api\AdsController::class,'getAds']);
+Route::get('/lottery/win-number',[\App\Http\Controllers\Api\HistoryController::class, 'getLotteryWinNumbers']);
 
 // Register Routes
 Route::apiResource('registers', ApiController\RegisterController::class)->except([

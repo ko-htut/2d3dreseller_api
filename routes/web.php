@@ -22,3 +22,5 @@ Route::get('/', function () {
 Route::get('/test',[FirestoreController::class,'twoDLive']);
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::get('/test/lottery', [\App\Http\Controllers\Api\HistoryController::class, 'saveLotteryWinNumbersFromAPI']);
