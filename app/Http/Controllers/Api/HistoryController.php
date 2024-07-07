@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class HistoryController extends Controller
 {
@@ -74,25 +75,32 @@ class HistoryController extends Controller
         }
     }
 
-    public function saveLotteryWinNumbersFromAPI(Request $request)
-    {
-       
+
+
+public function saveLotteryWinNumbersFromAPI(Request $request)
+{
+    try {
+        Log::info('Request received to save lottery win numbers from API.');
+
         $response = Http::withHeaders([
-            'X-RapidAPI-Key' => 'Nsy9zcuLzlmshcgP7OJIlmYjgwnYp1trpSDjsnNOxkaNgGvdSy',
+            'X-RapidAPI-Key' => '4cc8752188msh04d1cae3de5f8dcp144099jsn60d6fc38592e',
             'X-RapidAPI-Host' => 'thai-lottery1.p.rapidapi.com',
         ])->get('https://thai-lottery1.p.rapidapi.com/', [
-            'date' => '01072567', 
+            'date' => '01102566', 
         ]);
 
         if ($response->failed()) {
-            $this->fail("Fail to request api", 400);
+            Log::error('Failed to request API. Status Code: ' . $response->status());
+            return response()->json(['message' => 'Fail to request API'], 400);
         }
 
         if ($response->serverError()) {
-            $this->fail("server error", 500);
+            Log::error('Server error while requesting API. Status Code: ' . $response->status());
+            return response()->json(['message' => 'Server error'], 500);
         }
 
-        $result = json_decode($response, true);
+        $result = json_decode($response->body(), true);
+        Log::info('API response received successfully.', ['response' => $result]);
 
         $first = array_slice($result[0], 1, count($result[0]) - 1, true);
         $first_three_digit = array_slice($result[1], 1, count($result[1]) - 1, true);
@@ -103,12 +111,13 @@ class HistoryController extends Controller
         $third = array_slice($result[6], 1, count($result[6]) - 1, true);
         $fourth = array_slice($result[7], 1, count($result[7]) - 1, true);
         $fifth = array_slice($result[8], 1, count($result[8]) - 1, true);
-        //dd($result, implode($first), implode(',',$first_three_digit), $last_three_digit, $last_two_digit, $first_near, $second, $third, $fourth, $fifth);
+
+        Log::info('Parsed API response data.');
 
         $data = new LotteryHistory();
-        $data->open_at = '2024-03-16';
-        $data->year = '2024';
-        $data->month = '07';
+        $data->open_at = '2023-10-01';
+        $data->year = '2023';
+        $data->month = '10';
         $data->first = implode($first);
         $data->first_three_digit = implode(',', $first_three_digit);
         $data->last_three_digit = implode(',', $last_three_digit);
@@ -120,7 +129,13 @@ class HistoryController extends Controller
         $data->fifth = implode(',', $fifth);
         $data->save();
 
+        Log::info('Lottery data saved successfully.', ['data' => $data]);
+    } catch (\Exception $e) {
+        Log::error('An error occurred while saving lottery win numbers from API.', ['exception' => $e]);
+        return response()->json(['message' => 'An error occurred'], 500);
     }
+}
+
 
       public function getLotteryWinNumbers(Request $request)
       {
