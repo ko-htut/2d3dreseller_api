@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\LotteryLedger;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LotteryHistoryResource extends JsonResource
@@ -17,7 +16,7 @@ class LotteryHistoryResource extends JsonResource
     {
         return [
 //            'year' => $this->year,
-//            'month' => $this->month,
+            'open_at' => $this->open_at,
             'first' => $this->first,
             'first_near' => $this->first_near,
             'second' => $this->second,
